@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.NewsFragment">
-
+    tools:context=".ui.news.NewsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvNews"
@@ -16,4 +15,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/news_item"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

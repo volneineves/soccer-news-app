@@ -1,7 +1,7 @@
-package com.volnei.soccernews.ui.home;
+package com.volnei.soccernews.ui.news;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.volnei.soccernews.MainActivity;
 import com.volnei.soccernews.databinding.FragmentNewsBinding;
 import com.volnei.soccernews.ui.adapter.NewsAdapter;
 
@@ -26,9 +27,25 @@ public class NewsFragment extends Fragment {
         View root = binding.getRoot();
 
         binding.rvNews.setLayoutManager(new LinearLayoutManager(getContext()));
-        newsViewModel.getNews().observe(getViewLifecycleOwner(), news -> binding.rvNews.setAdapter(new NewsAdapter(news, view -> {
-            Log.d("MINHA_TAG", "Clicou em favoritar");
-        })));
+        newsViewModel.getNews().observe(getViewLifecycleOwner(), news ->
+                binding.rvNews.setAdapter(new NewsAdapter(news, updatedNews -> {
+                    MainActivity activity = (MainActivity) getActivity();
+                    AsyncTask.execute(() -> {
+                        if (activity != null) {
+                            activity.getDb().newsDao().save(updatedNews);
+                        }
+                    });
+                })));
+
+        newsViewModel.getState().observe(getViewLifecycleOwner(), state -> {
+            switch (state) {
+                case DOING: // TODO Iniciar SwiperRefreshLayout (loading)
+                    break;
+                case DONE: // TODO Finalizar SwiperRefreshLayout (loading)
+                    break;
+                case ERROR: // TODO Finalizar SwiperRefreshLayout (loading); Mostrar erro genérico
+            }
+        });
         return root;
     }
 
