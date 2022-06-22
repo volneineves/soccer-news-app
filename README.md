@@ -1,6 +1,4 @@
-# Soccer News App
-
-# DIO: Matches Simulator App
+# DIO: Soccer News App
 
 ![Logo do Markdown](./assets/mobile.png)
 
