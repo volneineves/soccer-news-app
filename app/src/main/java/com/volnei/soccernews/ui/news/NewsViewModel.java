@@ -44,7 +44,6 @@ public class NewsViewModel extends ViewModel {
 
             @Override
             public void onFailure(@NonNull Call<List<News>> call, Throwable error) {
-                //FIXME Tirar o printStackTrace quando formos para produção!
                 error.printStackTrace();
                 state.setValue(State.ERROR);
             }
